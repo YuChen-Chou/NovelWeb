@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void findViewID() {
-        //imageViewLoginLogo =(ImageView)findViewById(R.id.imageView_login_logo);
         username = (EditText)findViewById(R.id.editText_username);
         password = (EditText)findViewById(R.id.editText_password);
         buttonCancel = (Button)findViewById(R.id.button_cancel);
@@ -88,8 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("login","username: "+username.getText().toString());
-                            Log.d("login","password: "+password.getText().toString());
                             String result = HttpLogin.LoginByPost(username.getText().toString(),password.getText().toString());
                             Bundle bundle = new Bundle();
                             bundle.putString("result",result);
@@ -115,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle = msg.getData();
                     String result = bundle.getString("result");
-                    Log.d("login","result:"+result);
                     if("success".equals(result)){
                         Toast.makeText(context,"登入成功",Toast.LENGTH_SHORT).show();
                         //TODO:登入返回成功=>跳轉分類選單ClassificationActivity
@@ -145,8 +141,6 @@ public class LoginActivity extends AppCompatActivity {
         if(username.length()==0 || password.length()==0){
             b=false;
         }
-        //TODO:可以增加正則驗證(未實作)
-        //TODO:應該加上不能為空字串(未實作)
 
         return b;
     }
