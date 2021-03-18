@@ -53,8 +53,6 @@ public class ClassificationActivity extends AppCompatActivity {
 
         //連線Servlet
         MyThread();
-
-
     }
 
     private void MyThread() {
@@ -81,10 +79,7 @@ public class ClassificationActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle = msg.getData();
                     String result = bundle.getString("result");
-                    Log.d(TAG, "handleMessage: "+result);
                     StringToHashMap(result);
-
-
                     break;
             }
         }
@@ -96,7 +91,6 @@ public class ClassificationActivity extends AppCompatActivity {
             List<NovelsClass> list = new ArrayList<NovelsClass>();
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jobj = jsonArray.getJSONObject(i);
-                //Log.d(TAG, "json: "+jobj.getString("class"));
                 //裝到classBean-方便後續使用
                 NovelsClass nc = new NovelsClass();
                 nc.setClass_id(jobj.getInt("class_id"));
@@ -106,7 +100,6 @@ public class ClassificationActivity extends AppCompatActivity {
             //轉成HashMap
             int i=0;
             for(NovelsClass n: list){
-                //Log.d(TAG, "list: "+n.getClassName());
                 Map<String,Object> data = new HashMap<>();
                 data.put("name",n.getClassName());
                 data.put("class_id",n.getClass_id());
@@ -120,8 +113,6 @@ public class ClassificationActivity extends AppCompatActivity {
                     new String[]{"name","image"},
                     new int[]{R.id.textView_classinfo,R.id.imageView_bag});
             listViewClassinfo.setAdapter(adapter);
-
-
 
             //監聽ListView:點選跳轉該類別資料
             listViewClassinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
