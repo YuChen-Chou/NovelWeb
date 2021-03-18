@@ -59,9 +59,6 @@ public class NovlesListActivity extends AppCompatActivity {
         pageSize = 10;
         Log.d(TAG, "class_id: "+class_id);
         setTitle(className);
-        //<-
-//        ActionBar bar = getSupportActionBar();
-//        bar.setDisplayHomeAsUpEnabled(true);
 
         //TODO:呼叫servlet拿到該類別的小說清單
         MyThread();
@@ -109,7 +106,7 @@ public class NovlesListActivity extends AppCompatActivity {
             List<Novels> list = new ArrayList<Novels>();
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jobj = jsonArray.optJSONObject(i);
-                //裝到NovelsBean-方便後續使用
+                //裝到NovelsBean
                 Novels nc = new Novels();
                 nc.setName(jobj.optString("novelName"));
                 nc.setAuthor(jobj.optString("novelAuthor"));
