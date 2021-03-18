@@ -77,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
                     gender ="M";
                     switchGender.setText("M");
                 }
-                Log.d("main","sexData="+ gender);
             }
         });
     }
