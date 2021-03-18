@@ -47,7 +47,6 @@ public class ContentActivity extends AppCompatActivity {
         context=this;
 
         Intent intent = getIntent();
-        Log.d(TAG, "getIntent(): "+getIntent());
         String chapterName=intent.getStringExtra("name");
         chapter_id=intent.getIntExtra("chapter_id",1);
         novel_id=intent.getIntExtra("novel_id",1);
@@ -68,7 +67,6 @@ public class ContentActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "run: novel_id:"+novel_id);
                 String result = HttpGetData.getContentByNovelChapter(novel_id,chapter_id,type);
                 Bundle bundle = new Bundle();
                 bundle.putString("result",result);
@@ -89,7 +87,6 @@ public class ContentActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle = msg.getData();
                     String result = bundle.getString("result");
-                    Log.d(TAG, "handleMessage111: "+result);
                     StringToHashMap(result);
                     break;
             }
@@ -101,23 +98,19 @@ public class ContentActivity extends AppCompatActivity {
             List<Chapter> list = new ArrayList<Chapter>();
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jobj = jsonArray.optJSONObject(i);
-                //Log.d(TAG, "json: "+jsonArray.optJSONObject(i).optString("novelIntroduction"));
                 //裝到ChapterBean-方便後續使用
                 Chapter nc = new Chapter();
                 nc.setContent(jobj.optString("content"));
                 nc.setNovel_id(jobj.optInt("novel_id"));
                 nc.setId(jobj.optInt("id"));
                 nc.setName(jobj.optString("name"));
-                Log.d(TAG, "name: "+jobj.optString("name"));
                 list.add(nc);
             }
 
             setTitle("章節>"+list.get(0).getName());
-            Log.d(TAG, "list.get(0).getName(): "+list.get(0).getName());
             //顯示內容
             textView_cont.setText(list.get(0).getContent());
             chapter_id = list.get(0).getId();
-            Log.d(TAG, "res chapter_id: "+chapter_id+" | "+list.get(0).getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -157,9 +150,7 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     private void checkHasPrePage() {
-        Log.d(TAG, "pre chapter_id: "+chapter_id+",start_id: "+start_id);
         if(start_id==chapter_id){
-
             Toast.makeText(context,"已經沒有上一章節了!",Toast.LENGTH_SHORT).show();
         }else{
             //呼叫上一章節
@@ -170,7 +161,6 @@ public class ContentActivity extends AppCompatActivity {
             intent.putExtra("start_id",start_id);
             intent.putExtra("end_id",end_id);
             intent.putExtra("type","pre");
-            //intent.putExtra("content",content);
             startActivity(intent);
             finish();
         }
@@ -178,19 +168,16 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     private void checkHasNextPage() {
-        Log.d(TAG, "next chapter_id: "+chapter_id+",start_id: "+start_id);
         if(end_id==chapter_id){
             Toast.makeText(context,"已經沒有下一章節了!",Toast.LENGTH_SHORT).show();
         }else{
             //呼叫下一章節
-            //MyThread(novel_id,chapter_id,"next");
             Intent intent = new Intent(context,ContentActivity.class);
             intent.putExtra("chapter_id",chapter_id);
             intent.putExtra("novel_id",novel_id);
             intent.putExtra("start_id",start_id);
             intent.putExtra("end_id",end_id);
             intent.putExtra("type","next");
-            //intent.putExtra("content",content);
             startActivity(intent);
             finish();
         }
