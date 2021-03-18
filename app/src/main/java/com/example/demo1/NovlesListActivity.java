@@ -57,7 +57,6 @@ public class NovlesListActivity extends AppCompatActivity {
         class_id = intent.getIntExtra("class_id",0);
         pageNow = 1;
         pageSize = 10;
-        Log.d(TAG, "class_id: "+class_id);
         setTitle(className);
 
         //TODO:呼叫servlet拿到該類別的小說清單
@@ -69,7 +68,6 @@ public class NovlesListActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "run: class_id:"+class_id);
                 String result = HttpGetData.getNovelsByClass(pageNow,pageSize,class_id);
                 Bundle bundle = new Bundle();
                 bundle.putString("result",result);
@@ -91,7 +89,6 @@ public class NovlesListActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle = msg.getData();
                     String result = bundle.getString("result");
-                    Log.d(TAG, "handleMessage111: "+result);
                     StringToHashMap(result);
                     break;
             }
@@ -123,7 +120,6 @@ public class NovlesListActivity extends AppCompatActivity {
                 data.put("author",n.getAuthor());
                 data.put("intro",n.getIntroduction());
                 data.put("image",n.getPic());
-                Log.d(TAG, "image: "+n.getPic());
                 itemList.add(data);
             }
 
