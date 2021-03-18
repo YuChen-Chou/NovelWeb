@@ -71,7 +71,6 @@ public class ChapterActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "run: novel_id:"+novel_id);
                 String result = HttpGetData.getChapterByNovel(novel_id);
                 Bitmap bitmap = ImgUtils.getBitmapFromURL(imagePath);
                 Bundle bundle = new Bundle();
